@@ -9,16 +9,16 @@ Uncomment the lines of code  which have been commented below to make the applica
 const helmet = require('helmet')
 const csrf = require('csurf');
 
-app.use(helmet)
-app.use(express.csrf());
+app.use(helmet());
+app.use(express.json());
 
 // Middlewares
 const csrfProtect = csrf({ cookie: true })
-app.get('/form', csrfProtect, function(req, res) {
-res.render('send', { csrfToken: req.csrfToken() })
-})
+app.get('/form', function(req, res) {
+  res.render('send', { csrfToken: req.csrfToken() });
+});
 app.post('/posts/create', parseForm, csrfProtect, function(req, res) {
-res.send('data is being processed')
+  res.send('data is being processed')
 })
 
 const sessionConfig = {
@@ -26,7 +26,6 @@ const sessionConfig = {
   name: 'graphy',
   resave: false,
   saveUninitialized: false,
-  store: store,
   cookie : {
     sameSite: 'strict',
   }

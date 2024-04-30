@@ -1,9 +1,7 @@
-FROM node:hydrogen-buster
+FROM node:hydrogen-buster-slim
 COPY graphserver.js .
 COPY package.json .
 COPY UScities.json .
-RUN npm install &&\
-    apk update &&\
-    apk upgrade
+RUN npm install
 EXPOSE  4000
-CMD node graphserver.js
+CMD ["node", "graphserver.js"]
